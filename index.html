@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shared Bookmarks</title>
+  <title>Aida's Shared Bookmarks</title>
 
   <style>
     body {
@@ -65,10 +65,6 @@
     hr {
       margin: 20px 0;
     }
-
-    #popup {
-      margin-top: 30px;
-    }
   </style>
 
   <script type="module" src="script.js"></script>
@@ -77,34 +73,30 @@
   <h1>MY FAVORITE BOOKMARKS</h1>
 
   <!-- انتخاب کاربر -->
-  <form id="userForm">
-    <label for="userSelect">Select User:</label>
-    <select id="userSelect">
-      <option value="" disabled selected>Select User</option>
-    </select>
+  <label for="userSelect">Select User:</label>
+  <select id="userSelect">
+    <option value="" disabled selected>Select User</option>
+  </select>
 
-    <label id="userName">User is: Guest</label>
-
-    <!-- <button type="button" id="addBtn">Add a new Bookmark</button> -->
-  </form>
+  <label id="userName">User is: Guest</label>
 
   <hr>
 
   <!-- فرم افزودن بوکمارک -->
-  <div id="popup" style="display: block;">
+  <form id="bookmarkForm">
     <h3>ADD A NEW BOOKMARK</h3>
 
     <label for="bookmarkName">Title:</label>
-    <input type="text" id="bookmarkName" placeholder="Book title">
+    <input type="text" id="bookmarkName" placeholder="Book title" required>
 
     <label for="bookmarkUrl">URL:</label>
-    <input type="text" id="bookmarkUrl" placeholder="e.g., https://amazon.org">
+    <input type="text" id="bookmarkUrl" placeholder="e.g., https://amazon.org" required>
 
     <label for="bookmarkDesc">Description:</label>
     <textarea id="bookmarkDesc" placeholder="A short description of the book"></textarea>
 
-    <button id="submitBtn">Save</button>
-  </div>
+    <button id="submitBtn" type="submit">Save</button>
+  </form>
 
   <hr>
 

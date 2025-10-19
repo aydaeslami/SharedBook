@@ -6,7 +6,7 @@
 let userName = "Guest";
 let dataForUser = [];
 let userIndex = "";
-import { getData, getUserIds } from "./storage.js";
+import { getData, getUserIds, clearData } from "./storage.js";
 import { fetchDataForUser, saveDataForUser } from "./Functions.mjs";
 
 window.onload = function () {
@@ -22,12 +22,17 @@ window.onload = function () {
   const selectElement = document.getElementById("userSelect");
   const bookmarkList = document.getElementById("bookmarkList");
   const submitButton = document.getElementById("submitBtn");
+  const deleteButton = document.getElementById("deleteBtn");
 
   // handle user change
   selectElement.addEventListener("change", handleUserChangeFun);
 
   // handle form submission
-  submitButton.addEventListener("click", submitBtnFun);
+  const form = document.getElementById("bookmarkForm");
+  form.addEventListener("submit", submitBtnFun);
+
+  // handle delete button
+  // deleteButton.addEventListener("click", deleteBtnFun);
 
   function fillUserList(users) {
     console.log("Filling user list with users:", users);
@@ -42,6 +47,7 @@ window.onload = function () {
 
   // handle user change
   function handleUserChangeFun(event) {
+
     userIndex = event.target.value;
     const userNameLabel = document.getElementById("userName");
     const bookmarkList = document.getElementById("bookmarkList");
@@ -58,40 +64,52 @@ window.onload = function () {
     }
   }
 
-  // handle form submission
-  function submitBtnFun(event) {
-    event.preventDefault();
-    console.log("Submit button clicked");
+  // make Enter in textarea submit the form instead of new line
+  const descField = document.getElementById("bookmarkDesc");
 
-    const bookmarkName = document.getElementById("bookmarkName").value;
-    const bookmarkUrl = document.getElementById("bookmarkUrl").value;
-    const bookmarkDesc = document.getElementById("bookmarkDesc").value;
-
-    /// validate inputs
-    if (bookmarkName && bookmarkUrl) {
-      saveDataForUser(userIndex, {
-        name: bookmarkName,
-        url: bookmarkUrl,
-        description: bookmarkDesc,
-      });
-      // Add your form submission logic here
-      showBookmarks(userIndex);
-    } else {
-      console.log("Bookmark name and URL are required.");
+  descField.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      form.requestSubmit();
     }
-  }
+  });
 };
 
+// handle form submission
+function submitBtnFun(event) {
+  event.preventDefault();
+  console.log("Submit button clicked");
+
+  const bookmarkName = document.getElementById("bookmarkName").value;
+  const bookmarkUrl = document.getElementById("bookmarkUrl").value;
+  const bookmarkDesc = document.getElementById("bookmarkDesc").value;
+
+  /// validate inputs
+  if (bookmarkName && bookmarkUrl) {
+    saveDataForUser(userIndex, {
+      name: bookmarkName,
+      url: bookmarkUrl,
+      description: bookmarkDesc,
+      createdAt: new Date().toISOString(),
+    });
+    // Add your form submission logic here
+    showBookmarks(userIndex);
+  } else {
+    console.log("Bookmark name and URL are required.");
+  }
+}
 function showBookmarks(userIndex) {
   const data = getData(userIndex);
   const bookmarkList = document.getElementById("bookmarkList");
-
-  bookmarkList.innerHTML = ""; // پاک کردن لیست قبلی
+  console.log("Type of data:", typeof data);
+  bookmarkList.innerHTML = "";
 
   if (!data || data.length === 0) {
     bookmarkList.innerHTML = `<em>User ${userIndex} has no bookmarks yet.</em>`;
     return;
   }
+  console.log("Data to show:", data);
+  data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   data.forEach((item) => {
     const div = document.createElement("div");
@@ -99,11 +117,26 @@ function showBookmarks(userIndex) {
       <strong>${item.name}</strong><br>
       <a href="${item.url}" target="_blank">${item.url}</a><br>
       <small>${item.description || ""}</small>
+      <br>
+
+<small>
+  Created at: ${new Date(item.createdAt).toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  })}
+</small>
       <hr>
     `;
     bookmarkList.appendChild(div);
   });
-
+  // const sortedData = sortDataForUser(data);
   console.log("Bookmarks for user", userIndex, data);
 }
-
+function deleteBtnFun() {
+  for (let i = 1; i <= 5; i++) {
+    clearData(i.toString());
+  }
+}

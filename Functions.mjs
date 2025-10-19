@@ -1,0 +1,22 @@
+import { getData, setData } from "./storage.js";
+
+export function fetchDataForUser(userId) {
+  const data = getData(userId);
+  if (data === null) {
+    //    console.log("No data found for user:", userId);
+    return null;
+  }
+  return data;
+}
+
+export function saveDataForUser(userId, newBookmark) {
+  let existingData = getData(userId);
+
+  if (!Array.isArray(existingData)) {
+    existingData = [];
+  }
+
+  existingData.push(newBookmark);
+  setData(userId, existingData);
+  console.log("Bookmark added for user:", userId, newBookmark);
+}

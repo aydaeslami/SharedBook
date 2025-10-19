@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shared Bookmarks</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 8px 14px;
+      border: 1px solid #000;
+      background-color: #f8f8f8;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+
+    button:hover {
+      background-color: #eaeaea;
+    }
+
+    hr {
+      margin: 20px 0;
+    }
+
+    #popup {
+      margin-top: 30px;
+    }
+  </style>
+
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <h1>MY FAVORITE BOOKMARKS</h1>
+
+  <!-- انتخاب کاربر -->
+  <form id="userForm">
+    <label for="userSelect">Select User:</label>
+    <select id="userSelect">
+      <option value="" disabled selected>Select User</option>
+    </select>
+
+    <label id="userName">User is: Guest</label>
+
+    <!-- <button type="button" id="addBtn">Add a new Bookmark</button> -->
+  </form>
+
+  <hr>
+
+  <!-- فرم افزودن بوکمارک -->
+  <div id="popup" style="display: block;">
+    <h3>ADD A NEW BOOKMARK</h3>
+
+    <label for="bookmarkName">Title:</label>
+    <input type="text" id="bookmarkName" placeholder="Book title">
+
+    <label for="bookmarkUrl">URL:</label>
+    <input type="text" id="bookmarkUrl" placeholder="e.g., https://amazon.org">
+
+    <label for="bookmarkDesc">Description:</label>
+    <textarea id="bookmarkDesc" placeholder="A short description of the book"></textarea>
+
+    <button id="submitBtn">Save</button>
+  </div>
+
+  <hr>
+
+  <!-- لیست بوکمارک‌ها -->
+  <h3>MY BOOKMARKS</h3>
+  <div id="bookmarkList">
+    <em>This user has no bookmarks yet.</em>
+  </div>
+</body>
+</html>

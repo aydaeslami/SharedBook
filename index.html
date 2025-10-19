@@ -32,7 +32,7 @@
       font-weight: bold;
     }
 
-    input[type="text"],
+    input,
     select,
     textarea {
       display: block;
@@ -90,12 +90,13 @@
     <input type="text" id="bookmarkName" placeholder="Book title" required>
 
     <label for="bookmarkUrl">URL:</label>
-    <input type="text" id="bookmarkUrl" placeholder="e.g., https://amazon.org" required>
+    <input type="url" id="bookmarkUrl" placeholder="e.g., https://amazon.org" required>
 
     <label for="bookmarkDesc">Description:</label>
-    <textarea id="bookmarkDesc" placeholder="A short description of the book"></textarea>
+    <textarea id="bookmarkDesc" placeholder="A short description of the book" required></textarea>
 
     <button id="submitBtn" type="submit">Save</button>
+    <button id="deleteBtn" type="button">Delete All Bookmarks</button>
   </form>
 
   <hr>
@@ -104,6 +105,7 @@
   <h3>MY BOOKMARKS</h3>
   <div id="bookmarkList">
     <em>This user has no bookmarks yet.</em>
+
   </div>
 </body>
 </html>

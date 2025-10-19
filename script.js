@@ -32,7 +32,7 @@ window.onload = function () {
   form.addEventListener("submit", submitBtnFun);
 
   // handle delete button
-  // deleteButton.addEventListener("click", deleteBtnFun);
+  deleteButton.addEventListener("click", deleteBtnFun);
 
   function fillUserList(users) {
     console.log("Filling user list with users:", users);
@@ -47,7 +47,6 @@ window.onload = function () {
 
   // handle user change
   function handleUserChangeFun(event) {
-
     userIndex = event.target.value;
     const userNameLabel = document.getElementById("userName");
     const bookmarkList = document.getElementById("bookmarkList");
@@ -78,46 +77,45 @@ window.onload = function () {
 // handle form submission
 function submitBtnFun(event) {
   event.preventDefault();
-  console.log("Submit button clicked");
+  if (userIndex) {
+    const bookmarkName = document.getElementById("bookmarkName").value;
+    const bookmarkUrl = document.getElementById("bookmarkUrl").value;
+    const bookmarkDesc = document.getElementById("bookmarkDesc").value;
 
-  const bookmarkName = document.getElementById("bookmarkName").value;
-  const bookmarkUrl = document.getElementById("bookmarkUrl").value;
-  const bookmarkDesc = document.getElementById("bookmarkDesc").value;
-
-  /// validate inputs
-  if (bookmarkName && bookmarkUrl) {
-    saveDataForUser(userIndex, {
-      name: bookmarkName,
-      url: bookmarkUrl,
-      description: bookmarkDesc,
-      createdAt: new Date().toISOString(),
-    });
-    // Add your form submission logic here
-    showBookmarks(userIndex);
-  } else {
-    console.log("Bookmark name and URL are required.");
+    /// validate inputs
+    if (bookmarkName && bookmarkUrl) {
+      saveDataForUser(userIndex, {
+        name: bookmarkName,
+        url: bookmarkUrl,
+        description: bookmarkDesc,
+        createdAt: new Date().toISOString(),
+      });
+      // Add your form submission logic here
+      showBookmarks(userIndex);
+    }
+  }  else {
+    alert("Please select a user before adding a bookmark.");
   }
 }
+
 function showBookmarks(userIndex) {
   const data = getData(userIndex);
   const bookmarkList = document.getElementById("bookmarkList");
-  console.log("Type of data:", typeof data);
   bookmarkList.innerHTML = "";
 
   if (!data || data.length === 0) {
     bookmarkList.innerHTML = `<em>User ${userIndex} has no bookmarks yet.</em>`;
     return;
   }
-  console.log("Data to show:", data);
   data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   data.forEach((item) => {
     const div = document.createElement("div");
     div.innerHTML = `
-      <strong>${item.name}</strong><br>
-      <a href="${item.url}" target="_blank">${item.url}</a><br>
-      <small>${item.description || ""}</small>
-      <br>
+      
+      <a href="${item.url}" target="_blank"><strong>${item.name}</strong><br></a><br>
+      <small>${item.description || ""}</small>       <br>
+
 
 <small>
   Created at: ${new Date(item.createdAt).toLocaleString("en-GB", {
@@ -132,11 +130,18 @@ function showBookmarks(userIndex) {
     `;
     bookmarkList.appendChild(div);
   });
-  // const sortedData = sortDataForUser(data);
-  console.log("Bookmarks for user", userIndex, data);
+
+  clearInputFieldsFun();
 }
 function deleteBtnFun() {
   for (let i = 1; i <= 5; i++) {
     clearData(i.toString());
   }
+}
+
+// deleteBtnFun();
+function clearInputFieldsFun() {
+  document.getElementById("bookmarkName").value = "";
+  document.getElementById("bookmarkUrl").value = "";
+  document.getElementById("bookmarkDesc").value = "";
 }

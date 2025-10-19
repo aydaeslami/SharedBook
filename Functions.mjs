@@ -20,3 +20,5 @@ export function saveDataForUser(userId, newBookmark) {
   setData(userId, existingData);
   console.log("Bookmark added for user:", userId, newBookmark);
 }
+
+

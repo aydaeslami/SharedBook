@@ -4,79 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aida's Shared Bookmarks</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 40px;
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-
-    h3 {
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-
-    form {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input,
-    select,
-    textarea {
-      display: block;
-      width: 100%;
-      max-width: 500px;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #000;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
-
-    button {
-      padding: 8px 14px;
-      border: 1px solid #000;
-      background-color: #f8f8f8;
-      cursor: pointer;
-      margin-right: 8px;
-    }
-
-    button:hover {
-      background-color: #eaeaea;
-    }
-
-    hr {
-      margin: 20px 0;
-    }
-  </style>
-
   <script type="module" src="script.js"></script>
 </head>
 <body>
   <h1>MY FAVORITE BOOKMARKS</h1>
 
   <!-- انتخاب کاربر -->
-  <label for="userSelect">Select User:</label>
+  <label for="userSelect">Select User:</label><br>
   <select id="userSelect">
     <option value="" disabled selected>Select User</option>
-  </select>
+  </select><br>
 
   <label id="userName">User is: Guest</label>
 
@@ -84,16 +21,16 @@
 
   <!-- فرم افزودن بوکمارک -->
   <form id="bookmarkForm">
-    <h3>ADD A NEW BOOKMARK</h3>
+    <h2>ADD A NEW BOOKMARK</h2>
 
-    <label for="bookmarkName">Title:</label>
-    <input type="text" id="bookmarkName" placeholder="Book title" required>
+    <label for="bookmarkName">Title:</label><br>
+    <input type="text" id="bookmarkName" name="bookmarkName" placeholder="Book title" required><br><br>
 
-    <label for="bookmarkUrl">URL:</label>
-    <input type="url" id="bookmarkUrl" placeholder="e.g., https://amazon.org" required>
+    <label for="bookmarkUrl">URL:</label><br>
+    <input type="url" id="bookmarkUrl" name="bookmarkUrl" placeholder="e.g., https://amazon.org" required><br><br>
 
-    <label for="bookmarkDesc">Description:</label>
-    <textarea id="bookmarkDesc" placeholder="A short description of the book" required></textarea>
+    <label for="bookmarkDesc">Description:</label><br>
+    <textarea id="bookmarkDesc" name="bookmarkDesc" placeholder="A short description of the book" required></textarea><br><br>
 
     <button id="submitBtn" type="submit">Save</button>
     <button id="deleteBtn" type="button">Delete All Bookmarks</button>
@@ -102,10 +39,9 @@
   <hr>
 
   <!-- لیست بوکمارک‌ها -->
-  <h3>MY BOOKMARKS</h3>
+  <h2>MY BOOKMARKS</h2>
   <div id="bookmarkList">
     <em>This user has no bookmarks yet.</em>
-
   </div>
 </body>
 </html>

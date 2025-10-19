@@ -6,10 +6,32 @@
   <title>Aida's Shared Bookmarks</title>
   <script type="module" src="script.js"></script>
 </head>
+<style>
+  input,
+  select,
+  textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+</style>
+
 <body>
   <h1>MY FAVORITE BOOKMARKS</h1>
 
-  <!-- انتخاب کاربر -->
   <label for="userSelect">Select User:</label><br>
   <select id="userSelect">
     <option value="" disabled selected>Select User</option>
@@ -19,7 +41,6 @@
 
   <hr>
 
-  <!-- فرم افزودن بوکمارک -->
   <form id="bookmarkForm">
     <h2>ADD A NEW BOOKMARK</h2>
 

@@ -3,7 +3,6 @@ import { getData, setData } from "./storage.js";
 export function fetchDataForUser(userId) {
   const data = getData(userId);
   if (data === null) {
-    //    console.log("No data found for user:", userId);
     return null;
   }
   return data;

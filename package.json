@@ -1,0 +1,20 @@
+{
+  "name": "sharedbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+ "test": "node --test"  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aydaeslami/SharedBook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+"type": "module",
+  "bugs": {
+    "url": "https://github.com/aydaeslami/SharedBook/issues"
+  },
+  "homepage": "https://github.com/aydaeslami/SharedBook#readme"
+}

@@ -1,8 +1,3 @@
-// This is a placeholder file which shows how you can access functions defined in other files.
-// It can be loaded into index.html.
-// You can delete the contents of the file once you have understood how it works.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
 let userName = "Guest";
 let dataForUser = [];
 let userIndex = "";
@@ -14,14 +9,10 @@ window.onload = function () {
   const users = getUserIds();
   fillUserList(users);
 
-  console.log("User selected:", userName);
-
   dataForUser = fetchDataForUser(userName);
 
   ///// test it later
   const selectElement = document.getElementById("userSelect");
-  const bookmarkList = document.getElementById("bookmarkList");
-  const submitButton = document.getElementById("submitBtn");
   const deleteButton = document.getElementById("deleteBtn");
 
   // handle user change
@@ -77,25 +68,31 @@ window.onload = function () {
 // handle form submission
 function submitBtnFun(event) {
   event.preventDefault();
-  if (userIndex) {
-    const bookmarkName = document.getElementById("bookmarkName").value;
-    const bookmarkUrl = document.getElementById("bookmarkUrl").value;
-    const bookmarkDesc = document.getElementById("bookmarkDesc").value;
 
-    /// validate inputs
-    if (bookmarkName && bookmarkUrl) {
-      saveDataForUser(userIndex, {
-        name: bookmarkName,
-        url: bookmarkUrl,
-        description: bookmarkDesc,
-        createdAt: new Date().toISOString(),
-      });
-      // Add your form submission logic here
-      showBookmarks(userIndex);
-    }
-  }  else {
+  if (!userIndex) {
     alert("Please select a user before adding a bookmark.");
+    return;
   }
+
+  const bookmarkName = document.getElementById("bookmarkName").value.trim();
+  const bookmarkUrl = document.getElementById("bookmarkUrl").value.trim();
+  const bookmarkDesc = document.getElementById("bookmarkDesc").value.trim();
+
+  // validate inputs
+  if (!bookmarkName || !bookmarkDesc) {
+    alert("Title and Description cannot be empty or spaces only.");
+    return;
+  }
+
+  saveDataForUser(userIndex, {
+    name: bookmarkName,
+    url: bookmarkUrl,
+    description: bookmarkDesc,
+    createdAt: new Date().toISOString(),
+  });
+
+  showBookmarks(userIndex);
+  clearInputFieldsFun();
 }
 
 function showBookmarks(userIndex) {
@@ -113,7 +110,9 @@ function showBookmarks(userIndex) {
     const div = document.createElement("div");
     div.innerHTML = `
       
-      <a href="${item.url}" target="_blank"><strong>${item.name}</strong><br></a><br>
+      <a href="${item.url}" target="_blank"><strong>${
+      item.name
+    }</strong><br></a><br>
       <small>${item.description || ""}</small>       <br>
 
 
@@ -130,8 +129,6 @@ function showBookmarks(userIndex) {
     `;
     bookmarkList.appendChild(div);
   });
-
-  clearInputFieldsFun();
 }
 function deleteBtnFun() {
   for (let i = 1; i <= 5; i++) {
@@ -139,7 +136,6 @@ function deleteBtnFun() {
   }
 }
 
-// deleteBtnFun();
 function clearInputFieldsFun() {
   document.getElementById("bookmarkName").value = "";
   document.getElementById("bookmarkUrl").value = "";

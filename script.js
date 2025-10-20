@@ -2,7 +2,11 @@ let userName = "Guest";
 let dataForUser = [];
 let userIndex = "";
 import { getData, getUserIds, clearData } from "./storage.js";
-import { fetchDataForUser, saveDataForUser } from "./Functions.mjs";
+import {
+  fetchDataForUser,
+  saveDataForUser,
+  sortByDateDesc,
+} from "./Functions.mjs";
 
 window.onload = function () {
   document.getElementById("userName").textContent = "User is: " + userName;
@@ -104,9 +108,9 @@ function showBookmarks(userIndex) {
     bookmarkList.innerHTML = `<em>User ${userIndex} has no bookmarks yet.</em>`;
     return;
   }
-  data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-  data.forEach((item) => {
+  // data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const sortedData = sortByDateDesc(data);
+  sortedData.forEach((item) => {
     const div = document.createElement("div");
     div.innerHTML = `
       

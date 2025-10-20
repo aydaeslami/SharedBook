@@ -20,4 +20,10 @@ export function saveDataForUser(userId, newBookmark) {
   console.log("Bookmark added for user:", userId, newBookmark);
 }
 
+export function sortByDateDesc(data) {
+  if (!Array.isArray(data)) return [];
+
+  return [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
 

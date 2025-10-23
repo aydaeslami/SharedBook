@@ -17,7 +17,6 @@ export function saveDataForUser(userId, newBookmark) {
 
   existingData.push(newBookmark);
   setData(userId, existingData);
-  console.log("Bookmark added for user:", userId, newBookmark);
 }
 
 export function sortByDateDesc(data) {

@@ -1,6 +1,3 @@
-let userName = "Guest";
-let dataForUser = [];
-let userIndex = "";
 import { getData, getUserIds, clearData } from "./storage.js";
 import {
   fetchDataForUser,
@@ -8,58 +5,21 @@ import {
   sortByDateDesc,
 } from "./Functions.mjs";
 
+let dataForUser = [];
+let userIndex = "";
+
 window.onload = function () {
-  document.getElementById("userName").textContent = "User is: " + userName;
   const users = getUserIds();
   fillUserList(users);
 
-  dataForUser = fetchDataForUser(userName);
-
-  ///// test it later
   const selectElement = document.getElementById("userSelect");
   const deleteButton = document.getElementById("deleteBtn");
-
-  // handle user change
-  selectElement.addEventListener("change", handleUserChangeFun);
-
-  // handle form submission
   const form = document.getElementById("bookmarkForm");
-  form.addEventListener("submit", submitBtnFun);
-
-  // handle delete button
-  deleteButton.addEventListener("click", deleteBtnFun);
-
-  function fillUserList(users) {
-    console.log("Filling user list with users:", users);
-    const userSelect = document.getElementById("userSelect");
-    users.forEach((userId) => {
-      const option = document.createElement("option");
-      option.value = userId;
-      option.innerText = `User ${userId}`;
-      userSelect.appendChild(option);
-    });
-  }
-
-  // handle user change
-  function handleUserChangeFun(event) {
-    userIndex = event.target.value;
-    const userNameLabel = document.getElementById("userName");
-    const bookmarkList = document.getElementById("bookmarkList");
-
-    userNameLabel.textContent = "User is: " + userIndex;
-    dataForUser = fetchDataForUser(userIndex);
-
-    if (dataForUser !== null) {
-      console.log("Data for user:", userIndex);
-      showBookmarks(userIndex);
-    } else {
-      console.log("No data found for user", userIndex);
-      bookmarkList.innerHTML = `<em>User ${userIndex} has no bookmarks yet.</em>`;
-    }
-  }
-
-  // make Enter in textarea submit the form instead of new line
   const descField = document.getElementById("bookmarkDesc");
+
+  selectElement.addEventListener("change", handleUserChangeFun);
+  form.addEventListener("submit", submitBtnFun);
+  deleteButton.addEventListener("click", deleteBtnFun);
 
   descField.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
@@ -73,14 +33,14 @@ window.onload = function () {
 function submitBtnFun(event) {
   event.preventDefault();
 
+  const bookmarkName = document.getElementById("bookmarkName").value.trim();
+  const bookmarkUrl = document.getElementById("bookmarkUrl").value.trim();
+  const bookmarkDesc = document.getElementById("bookmarkDesc").value.trim();
+
   if (!userIndex) {
     alert("Please select a user before adding a bookmark.");
     return;
   }
-
-  const bookmarkName = document.getElementById("bookmarkName").value.trim();
-  const bookmarkUrl = document.getElementById("bookmarkUrl").value.trim();
-  const bookmarkDesc = document.getElementById("bookmarkDesc").value.trim();
 
   // validate inputs
   if (!bookmarkName || !bookmarkDesc) {
@@ -108,29 +68,28 @@ function showBookmarks(userIndex) {
     bookmarkList.innerHTML = `<em>User ${userIndex} has no bookmarks yet.</em>`;
     return;
   }
-  // data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-const sortedData = sortByDateDesc(data);
+  const sortedData = sortByDateDesc(data);
   sortedData.forEach((item) => {
     const div = document.createElement("div");
     div.innerHTML = `
-      
-      <a href="${item.url}" target="_blank"><strong>${
+        
+        <a href="${item.url}" target="_blank"><strong>${
       item.name
     }</strong><br></a><br>
-      <small>${item.description || ""}</small>       <br>
+        <small>${item.description || ""}</small>       <br>
 
 
-<small>
-  Created at: ${new Date(item.createdAt).toLocaleString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  })}
-</small>
-      <hr>
-    `;
+  <small>
+    Created at: ${new Date(item.createdAt).toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })}
+  </small>
+        <hr>
+      `;
     bookmarkList.appendChild(div);
   });
 }
@@ -138,10 +97,36 @@ function deleteBtnFun() {
   for (let i = 1; i <= 5; i++) {
     clearData(i.toString());
   }
+  const bookmarkList = document.getElementById("bookmarkList");
+  bookmarkList.innerHTML = `<em>All bookmarks have been deleted.</em>`;
 }
 
 function clearInputFieldsFun() {
   document.getElementById("bookmarkName").value = "";
   document.getElementById("bookmarkUrl").value = "";
   document.getElementById("bookmarkDesc").value = "";
+}
+function fillUserList(users) {
+  const userSelect = document.getElementById("userSelect");
+  users.forEach((userId) => {
+    const option = document.createElement("option");
+    option.value = userId;
+    option.innerText = `User ${userId}`;
+    userSelect.appendChild(option);
+  });
+}
+
+function handleUserChangeFun(event) {
+  userIndex = event.target.value;
+  const userNameLabel = document.getElementById("userName");
+  const bookmarkList = document.getElementById("bookmarkList");
+
+  userNameLabel.textContent = "User " + userIndex + " is selected";
+  dataForUser = fetchDataForUser(userIndex);
+
+  if (dataForUser !== null) {
+    showBookmarks(userIndex);
+  } else {
+    bookmarkList.innerHTML = `<em>User ${userIndex} has no bookmarks yet.</em>`;
+  }
 }

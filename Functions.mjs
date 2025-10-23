@@ -19,6 +19,8 @@ export function saveDataForUser(userId, newBookmark) {
   setData(userId, existingData);
 }
 
+// Sort bookmarks by date in descending order (newest first).
+
 export function sortByDateDesc(data) {
   if (!Array.isArray(data)) return [];
 
